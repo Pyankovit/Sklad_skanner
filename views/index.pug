@@ -1,0 +1,33 @@
+html
+	head
+		include layout.pug
+		script.
+			$(document).ready(function(){
+			$("#myInput").on("keyup", function() {
+			var value = $(this).val().toLowerCase();
+			$("table tr").filter(function() {
+			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+			});
+			});
+			});
+	body
+	.container
+		input#myInput.form-control(type='text', placeholder='ВВедите артикул для поиска')
+		br
+		h1= 'Склад Дельта'
+	table
+		tr
+			th="id"
+			th="sku"
+			th="Последнее количество"
+			th="Крайняя цена Прайс"
+			th="Наличие на складе"
+		for delta in deltaList
+			tr
+				td(class='id')= delta.id
+				td(class='skuL')
+					a(href='/delta/'+delta.sku) #{delta.sku}
+				td(class='quant')= delta.quantity
+				td(class='price')= delta.price
+				td(class='timeL')
+					a(href='/delta/time/'+delta.time) #{delta.time}
